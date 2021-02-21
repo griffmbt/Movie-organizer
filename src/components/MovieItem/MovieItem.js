@@ -1,19 +1,42 @@
-import React, { Component } from 'react';
-import './MovieItem.css';
+import React, { Component } from "react";
+import "./MovieItem.css";
+
+import { connect } from "react-redux";
 
 class MovieItem extends Component {
-    render() {
-        const { title, year, poster } = this.props;
-        return (
-            <article className="movie-item">
-                <img className="movie-item__poster" src={poster} alt={title} />
-                <div className="movie-item__info">
-                    <h3 className="movie-item__title">{title}&nbsp;({year})</h3>
-                    <button type="button" className="movie-item__add-button">Добавить в список</button>
-                </div>
-            </article>
-        );
-    }
+  render() {
+    const { title, year, poster, addItemToCart, imdbID } = this.props;
+    return (
+      <article className="movie-item" key={imdbID}>
+        <img className="movie-item__poster" src={poster} alt={title} />
+        <div className="movie-item__info">
+          <h3 className="movie-item__title">
+            {title}&nbsp;({year})
+          </h3>
+          <button
+            onClick={() => addItemToCart(imdbID)}
+            type="button"
+            className="movie-item__add-button"
+          >
+            Добавить в список
+          </button>
+        </div>
+      </article>
+    );
+  }
 }
- 
-export default MovieItem;
+
+const mapDispatchToProps = (dispatch) => ({
+  addItemToCart: (imdbID) => {
+    const action = {
+      type: "ДОБАВИТЬ В КОРЗИНУ",
+      payload: {
+        imdbID: imdbID,
+      },
+    };
+
+    dispatch(action);
+  },
+});
+
+export default connect(null, mapDispatchToProps)(MovieItem);
