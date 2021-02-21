@@ -41,15 +41,15 @@ export default function reducer(state = initialState, action) {
     
   }
 
-  // if (action.type === "УДАЛИТЬ ТОВАР ИЗ КОРЗИНЫ") {
-  //   const item = state.cartGoods.filter(
-  //     (item) => item.id !== action.payload.id
-  //   );
-  //   return {
-  //       ...state,
-  //       cartGoods: item ,
-  //   };
-  // }
+  if (action.type === "УДАЛИТЬ ИЗ КОРЗИНЫ") {
+    const item = state.cart.filter(
+      (item) => item.imdbID !== action.payload.imdbID
+    );
+    return {
+        ...state,
+        cart: item,
+    };
+  }
 
   return state;
 }

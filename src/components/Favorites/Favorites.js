@@ -1,23 +1,29 @@
 import React, { Component } from "react";
 import "./Favorites.css";
 
+import {Link} from 'react-router-dom';
 import { connect } from "react-redux";
 
 class Favorites extends Component {
   state = {
     title: "Новый список",
+    isDisabled: false,
   };
 
   handleChangeFavorites = (event) => {
     this.setState({ title: event.target.value });
   };
+  clickDisabled = () => {
+    this.setState({ isDisabled: true, });
+  };
 
   render() {
-    const { cart, saveListFavorites } = this.props;
-    const { title } = this.state;
+    const { cart, saveListFavorites, removeItemToCart, imdbID } = this.props;
+    const { title, isDisabled } = this.state;
     return (
       <div className="favorites">
         <input
+          disabled={isDisabled}
           value={title}
           className="favorites__name"
           onChange={(event) => this.handleChangeFavorites(event)}
@@ -27,17 +33,19 @@ class Favorites extends Component {
             return (
               <li key={item.imdbID}>
                 {item.title} ({item.year})
+                <button onClick={() => removeItemToCart(item.imdbID)}>x</button>
               </li>
             );
           })}
         </ul>
-        <button
-          onClick={() => saveListFavorites(title)}
+        {isDisabled ? <Link to="/list/:id">посмотреть мой список</Link> : <button
+          onClick={() => (saveListFavorites(title), this.clickDisabled())}
           type="button"
           className="favorites__save"
         >
           Сохранить список
-        </button>
+        </button>}
+        
       </div>
     );
   }
@@ -47,11 +55,23 @@ const mapDispatchToProps = (dispatch) => ({
   saveListFavorites: (title) => {
     const action = {
       type: "НАЗВАНИЕ СПИСКА",
-      title: title
+      title: title,
     };
     dispatch(action);
   },
+
+  removeItemToCart: (imdbID) => {
+    const action = {
+      type: "УДАЛИТЬ ИЗ КОРЗИНЫ",
+      payload: {
+        imdbID: imdbID,
+      },
+    };
+
+    dispatch(action);
+  },
 });
+
 const mapStateToProps = (state) => ({ cart: state.cart });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Favorites);
