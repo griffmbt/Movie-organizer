@@ -8,18 +8,36 @@ class Favorites extends Component {
   state = {
     title: "Новый список",
     isDisabled: false,
+    linkId: ""
   };
+
+  postListAlgoritmika = async () => {
+    const response = await fetch("https://acb-api.algoritmika.org/api/movies/list", 
+    {
+      method: "POST",
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        "title": this.props.title,
+        "movies": this.props.cart.map(item => item.imdbID)
+      })
+    })
+    const data = await response.json()
+    this.setState({linkId: data.id})
+  }
 
   handleChangeFavorites = (event) => {
     this.setState({ title: event.target.value });
   };
   clickDisabled = () => {
+    this.postListAlgoritmika()
     this.setState({ isDisabled: true });
   };
 
   render() {
     const { cart, saveListFavorites, removeItemToCart, imdbID } = this.props;
-    const { title, isDisabled } = this.state;
+    const { title, isDisabled, linkId } = this.state;
     return (
       <div className="favorites">
         <input
@@ -40,7 +58,7 @@ class Favorites extends Component {
           })}
         </ul>
         {isDisabled ? (
-          <Link to="/list/:id">посмотреть мой список</Link>
+          <Link to={`/list/${linkId}`}>посмотреть мой список</Link>
         ) : (
           <button
             onClick={() => (saveListFavorites(title), this.clickDisabled())}
@@ -75,6 +93,6 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-const mapStateToProps = (state) => ({ cart: state.cart });
+const mapStateToProps = (state) => ({ cart: state.cart, title: state.title });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Favorites);
