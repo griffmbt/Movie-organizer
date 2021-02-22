@@ -17,6 +17,7 @@ class MovieItem extends Component {
             onClick={() => addItemToCart(imdbID)}
             type="button"
             className="movie-item__add-button"
+            disabled={this.props.cart.find(item => item.imdbID === imdbID)}
           >
             Добавить в список
           </button>
@@ -29,7 +30,7 @@ class MovieItem extends Component {
 const mapDispatchToProps = (dispatch) => ({
   addItemToCart: (imdbID) => {
     const action = {
-      type: "ДОБАВИТЬ В КОРЗИНУ",
+      type: "ADD_TO_LIST",
       payload: {
         imdbID: imdbID,
       },
@@ -39,4 +40,8 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default connect(null, mapDispatchToProps)(MovieItem);
+const mapStateToProps = (state) => ({
+  cart: state.cart
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MovieItem);

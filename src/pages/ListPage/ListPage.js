@@ -11,6 +11,7 @@ class ListPage extends Component {
         console.log(id);
         // TODO: запрос к сервер на получение списка
         // TODO: запросы к серверу по всем imdbID
+        
     }
     render() { 
         const { title, cart } = this.props;
@@ -30,7 +31,6 @@ class ListPage extends Component {
         );
     }
 }
-
 
 const mapStateToProps = (state) => ({
     title: state.title,

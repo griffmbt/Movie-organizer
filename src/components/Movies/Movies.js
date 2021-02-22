@@ -7,11 +7,12 @@ import { connect } from "react-redux";
 class Movies extends Component {
   
   render() {
+    console.log(this.props.cart)
     return (
       <ul className="movies">
         {this.props.movies.map((movie) => (
           <li className="movies__item" key={movie.imdbID}>
-            <MovieItem {...movie} />
+            <MovieItem {...movie}  />
           </li>
         ))}
       </ul>
@@ -21,6 +22,7 @@ class Movies extends Component {
 
 const mapStateToProps = (state) => ({
     movies: state.movies,
+    cart: state.cart
 });
 
 export default connect(mapStateToProps)(Movies);

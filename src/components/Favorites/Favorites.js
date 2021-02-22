@@ -58,7 +58,7 @@ class Favorites extends Component {
 const mapDispatchToProps = (dispatch) => ({
   saveListFavorites: (title) => {
     const action = {
-      type: "НАЗВАНИЕ СПИСКА",
+      type: "NAME_LIST",
       title: title,
     };
     dispatch(action);
@@ -66,16 +66,15 @@ const mapDispatchToProps = (dispatch) => ({
 
   removeItemToCart: (imdbID) => {
     const action = {
-      type: "УДАЛИТЬ ИЗ КОРЗИНЫ",
+      type: "REMOVE_MOVIES",
       payload: {
         imdbID: imdbID,
       },
     };
-
     dispatch(action);
   },
 });
 
-const mapStateToProps = (state) => ({ cart: state.cart});
+const mapStateToProps = (state) => ({ cart: state.cart });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Favorites);

@@ -6,7 +6,7 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action) {
-  if (action.type === "ДОБАВИТЬ В КОРЗИНУ") {
+  if (action.type === "ADD_TO_LIST") {
     const item = state.movies.find(
       (item) => item.imdbID === action.payload.imdbID
     );
@@ -16,15 +16,14 @@ export default function reducer(state = initialState, action) {
     };
   }
 
-  if (action.type === "НАЗВАНИЕ СПИСКА") {
-    console.log(action.title);
+  if (action.type === "NAME_LIST") {
     return {
       ...state,
       title: action.title,
     };
   }
 
-  if (action.type === "УДАЛИТЬ ИЗ КОРЗИНЫ") {
+  if (action.type === "REMOVE_MOVIES") {
     const item = state.cart.filter(
       (item) => item.imdbID !== action.payload.imdbID
     );
