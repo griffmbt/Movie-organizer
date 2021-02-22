@@ -5,7 +5,7 @@ import "./Movies.css";
 import { connect } from "react-redux";
 
 class Movies extends Component {
-
+  
   render() {
     return (
       <ul className="movies">

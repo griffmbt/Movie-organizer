@@ -31,3 +31,18 @@
     opacity: 0.9;
     transition: all 0.2s linear;
 }
+
+.favorites__list__delete {
+    margin: 10px;
+    border-radius: 50%;
+    text-align: center;
+    color: black;
+    background-color: white;
+    outline: none;
+    border: 0.5px solid;
+}
+
+.favorites__list__delete:hover {
+    color: white;
+    background-color: black;
+}

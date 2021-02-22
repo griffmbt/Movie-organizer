@@ -5,13 +5,13 @@ import { connect } from "react-redux";
 
 class MovieItem extends Component {
   render() {
-    const { title, year, poster, addItemToCart, imdbID } = this.props;
+    const { Title, Year, Poster, addItemToCart, imdbID } = this.props;
     return (
       <article className="movie-item" key={imdbID}>
-        <img className="movie-item__poster" src={poster} alt={title} />
+        <img className="movie-item__poster" src={Poster} alt={Title} />
         <div className="movie-item__info">
           <h3 className="movie-item__title">
-            {title}&nbsp;({year})
+            {Title}&nbsp;({Year})
           </h3>
           <button
             onClick={() => addItemToCart(imdbID)}

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./Favorites.css";
 
-import {Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 class Favorites extends Component {
@@ -14,7 +14,7 @@ class Favorites extends Component {
     this.setState({ title: event.target.value });
   };
   clickDisabled = () => {
-    this.setState({ isDisabled: true, });
+    this.setState({ isDisabled: true });
   };
 
   render() {
@@ -32,20 +32,24 @@ class Favorites extends Component {
           {cart.map((item) => {
             return (
               <li key={item.imdbID}>
-                {item.title} ({item.year})
-                <button onClick={() => removeItemToCart(item.imdbID)}>x</button>
+                <button className="favorites__list__delete" onClick={() => removeItemToCart(item.imdbID)}>x</button>
+                {item.Title} ({item.Year})
+                
               </li>
             );
           })}
         </ul>
-        {isDisabled ? <Link to="/list/:id">посмотреть мой список</Link> : <button
-          onClick={() => (saveListFavorites(title), this.clickDisabled())}
-          type="button"
-          className="favorites__save"
-        >
-          Сохранить список
-        </button>}
-        
+        {isDisabled ? (
+          <Link to="/list/:id">посмотреть мой список</Link>
+        ) : (
+          <button
+            onClick={() => (saveListFavorites(title), this.clickDisabled())}
+            type="button"
+            className="favorites__save"
+          >
+            Сохранить список
+          </button>
+        )}
       </div>
     );
   }
@@ -72,6 +76,6 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-const mapStateToProps = (state) => ({ cart: state.cart });
+const mapStateToProps = (state) => ({ cart: state.cart});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Favorites);
