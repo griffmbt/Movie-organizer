@@ -15,26 +15,34 @@ class ListPage extends Component {
   }
 
   loadListAlgoritmika = async () => {
-    const id = this.props.match.params;
-    const responseAlgoritmika = await fetch(
-      `https://acb-api.algoritmika.org/api/movies/list/${id.id}`
-    );
-    const listAlgoritmika = await responseAlgoritmika.json();
-    this.setState({ listAlgoritmika: listAlgoritmika }, () =>
-      this.loadListMovies()
-    );
+    try {
+      const id = this.props.match.params;
+      const responseAlgoritmika = await fetch(
+        `https://acb-api.algoritmika.org/api/movies/list/${id.id}`
+      );
+      const listAlgoritmika = await responseAlgoritmika.json();
+      this.setState({ listAlgoritmika: listAlgoritmika }, () =>
+        this.loadListMovies()
+      );
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   loadListMovies = () => {
-    this.state.listAlgoritmika.movies.forEach(async (movie) => {
-      const responseImdb = await fetch(
-        `http://www.omdbapi.com/?i=` + movie + `&apikey=af77a42c`
-      );
-      const listImdb = await responseImdb.json();
-      this.setState(() => ({
-        renderList: [...this.state.renderList, listImdb],
-      }));
-    });
+    try {
+      this.state.listAlgoritmika.movies.forEach(async (movie) => {
+        const responseImdb = await fetch(
+          `http://www.omdbapi.com/?i=` + movie + `&apikey=af77a42c`
+        );
+        const listImdb = await responseImdb.json();
+        this.setState(() => ({
+          renderList: [...this.state.renderList, listImdb],
+        }));
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   render() {
@@ -42,7 +50,9 @@ class ListPage extends Component {
       <div>
         <Header />
         <div className="list-page">
-          <h1 className="list-page__title">{this.state.listAlgoritmika.title}</h1>
+          <h1 className="list-page__title">
+            {this.state.listAlgoritmika.title}
+          </h1>
           <ul>
             {this.state.renderList.map((item) => {
               return (

@@ -5,32 +5,32 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action) {
-  if (action.type === "ADD_TO_LIST") {
-    const item = state.movies.find(
-      (item) => item.imdbID === action.payload.imdbID
-    );
-    return {
-      ...state,
-      cart: [...state.cart, { ...item }],
-    };
-  }
-
-  if (action.type === "REMOVE_MOVIES") {
-    const item = state.cart.filter(
-      (item) => item.imdbID !== action.payload.imdbID
-    );
-    return {
-      ...state,
-      cart: item,
-    };
-  }
-
-  if(action.type === "LOAD_MOVIES") {
-    return {
+  switch (action.type) {
+    case "ADD_TO_LIST":
+      const item = state.movies.find(
+        (item) => item.imdbID === action.payload.imdbID
+      );
+      return {
         ...state,
-        movies: [...action.payload.movies]
-    }
-  }
+        cart: [...state.cart, { ...item }],
+      };
 
-  return state;
+    case "REMOVE_MOVIES":
+      const item2 = state.cart.filter(
+        (item2) => item2.imdbID !== action.payload.imdbID
+      );
+      return {
+        ...state,
+        cart: item2,
+      };
+
+    case "LOAD_MOVIES":
+      return {
+        ...state,
+        movies: [...action.payload.movies],
+      };
+
+    default:
+      return state;
+  }
 }

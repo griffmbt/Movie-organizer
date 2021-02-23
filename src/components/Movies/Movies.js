@@ -7,7 +7,6 @@ import { connect } from "react-redux";
 class Movies extends Component {
   
   render() {
-    console.log(this.props.cart)
     return (
       <ul className="movies">
         {this.props.movies.map((movie) => (
