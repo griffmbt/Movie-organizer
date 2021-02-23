@@ -19,7 +19,7 @@ class Favorites extends Component {
         'Content-type': 'application/json',
       },
       body: JSON.stringify({
-        "title": this.props.title,
+        "title": this.state.title,
         "movies": this.props.cart.map(item => item.imdbID)
       })
     })
@@ -30,13 +30,14 @@ class Favorites extends Component {
   handleChangeFavorites = (event) => {
     this.setState({ title: event.target.value });
   };
+  
   clickDisabled = () => {
     this.postListAlgoritmika()
     this.setState({ isDisabled: true });
   };
 
   render() {
-    const { cart, saveListFavorites, removeItemToCart, imdbID } = this.props;
+    const { cart, removeItemToCart } = this.props;
     const { title, isDisabled, linkId } = this.state;
     return (
       <div className="favorites">
@@ -58,10 +59,10 @@ class Favorites extends Component {
           })}
         </ul>
         {isDisabled ? (
-          <Link to={`/list/${linkId}`}>посмотреть мой список</Link>
+          <Link to={`/list/${linkId}`} target="_blank">посмотреть мой список</Link>
         ) : (
           <button
-            onClick={() => (saveListFavorites(title), this.clickDisabled())}
+            onClick={() => this.clickDisabled()}
             type="button"
             className="favorites__save"
           >
@@ -74,17 +75,6 @@ class Favorites extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  saveListFavorites: (title) => {
-    const action = {
-      type: "NAME_LIST",
-      payload: {
-        title: title,
-      },
-     
-    };
-    dispatch(action);
-  },
-
   removeItemToCart: (imdbID) => {
     const action = {
       type: "REMOVE_MOVIES",
@@ -96,6 +86,6 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-const mapStateToProps = (state) => ({ cart: state.cart, title: state.title });
+const mapStateToProps = (state) => ({ cart: state.cart});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Favorites);

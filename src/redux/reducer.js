@@ -1,6 +1,5 @@
 const initialState = {
   movies: [],
-  title: "Новый список",
   searchLine: "",
   cart: [],
 };
@@ -13,13 +12,6 @@ export default function reducer(state = initialState, action) {
     return {
       ...state,
       cart: [...state.cart, { ...item }],
-    };
-  }
-
-  if (action.type === "NAME_LIST") {
-    return {
-      ...state,
-      title: action.payload.title,
     };
   }
 

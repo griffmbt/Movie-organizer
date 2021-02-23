@@ -38,13 +38,11 @@ class ListPage extends Component {
   };
 
   render() {
-    const { title } = this.props;
-    console.log(this.props.title);
     return (
       <div>
         <Header />
         <div className="list-page">
-          <h1 className="list-page__title">{title}</h1>
+          <h1 className="list-page__title">{this.state.listAlgoritmika.title}</h1>
           <ul>
             {this.state.renderList.map((item) => {
               return (
