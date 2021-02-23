@@ -19,7 +19,7 @@ export default function reducer(state = initialState, action) {
   if (action.type === "NAME_LIST") {
     return {
       ...state,
-      title: action.title,
+      title: action.payload.title,
     };
   }
 

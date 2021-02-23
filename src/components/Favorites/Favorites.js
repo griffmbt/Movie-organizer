@@ -77,7 +77,10 @@ const mapDispatchToProps = (dispatch) => ({
   saveListFavorites: (title) => {
     const action = {
       type: "NAME_LIST",
-      title: title,
+      payload: {
+        title: title,
+      },
+     
     };
     dispatch(action);
   },

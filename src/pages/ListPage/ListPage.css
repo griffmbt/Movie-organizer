@@ -10,3 +10,7 @@
 .list-page ul li {
     font-size: 18px;
 }
+
+.movie-item__director, .movie-item__imdbRating {
+    margin: 10px;
+}
